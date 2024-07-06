@@ -3,17 +3,19 @@
 #include <SFML/Graphics.hpp>
 #include <filesystem>
 
-class Entity 
+class WorldObject 
 {
 public:
-    Entity() = default;
-    ~Entity() = default;
+    WorldObject() = default;
+    ~WorldObject() = default;
 
     void draw(sf::RenderWindow& window);
 
     [[nodiscard]] sf::Sprite getSprite() const;
     [[nodiscard]] sf::Texture getTexture() const;
     [[nodiscard]] sf::Vector2f getPosition() const;
+    [[nodiscard]] sf::Color getColor() const;
+    [[nodiscard]] sf::Vector2f getScale() const;
     
     void setTexture(const sf::Texture& texture);
     void setTexture(const std::filesystem::path& texturePath);

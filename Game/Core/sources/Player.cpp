@@ -1,4 +1,4 @@
-#include "Player.h"
+#include "../includes/Player.h"
 
 #include <iostream>
 
@@ -47,11 +47,6 @@ std::size_t Player::getMoneyLvl() const
 float Player::getSpeed() const
 {
     return 0.0f;
-}
-
-void Player::setSpeed(float speed)
-{
-    _speed = speed;
 }
 
 void Player::setHealthLvl(std::size_t healthLvl)

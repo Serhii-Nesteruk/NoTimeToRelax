@@ -1,4 +1,4 @@
-#include "Game/Game.h"
+#include "Game/Core/includes/Game.h"
 
 #include <iostream>
 
@@ -12,7 +12,7 @@ int main()
     catch(const std::runtime_error& e)
     {
         std::cerr << "=================" << std::endl;
-        std::cerr << e.what() << '\n';
+        std::cerr << e.what() << '\n'   ;
         std::cerr << "=================" << std::endl;
     }
 

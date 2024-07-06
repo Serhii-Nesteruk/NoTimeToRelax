@@ -1,4 +1,4 @@
-#include "Game.h"
+#include "../includes/Game.h"
 
 Game::Game(const sf::Vector2f windowSize, const std::string& tittle)
     : _windowSize(windowSize), _tittle(tittle)

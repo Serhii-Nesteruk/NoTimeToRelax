@@ -1,0 +1,13 @@
+file(GLOB CORE_HEADERS
+    "includes/*.h"
+)
+
+file(GLOB CORE_SOURCES
+    "sources/*.cpp"
+)
+
+add_library(Core ${CORE_HEADERS} ${CORE_SOURCES})
+
+target_include_directories(Core PUBLIC
+    "includes"
+)
