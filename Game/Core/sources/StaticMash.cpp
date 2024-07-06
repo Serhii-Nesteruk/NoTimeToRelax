@@ -2,11 +2,6 @@
 
 #include <algorithm>
 
-bool StaticMash::isClicked() const {
-    notifyObservers();
-    return true;
-}
-
 void StaticMash::addObserver(IObserver* observer) {
     _observers.push_back(observer);
 }

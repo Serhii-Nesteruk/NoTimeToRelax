@@ -14,11 +14,12 @@ public:
         _speed = speed;
     }
 
-
     [[nodicard]] float getSpeed () const
     {
         return _speed;
     }
+
+    void move(const sf::Vector2f& offset);
 protected:
-    float _speed = 0.f;
+    float _speed = 700.f;
 };

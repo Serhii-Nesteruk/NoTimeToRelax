@@ -26,7 +26,7 @@ public:
     void setScale(const sf::Vector2f& scale);
     void setRotation(float angle);
     void setOrigin(float x, float y);
-private:
+protected:
     sf::Sprite _sprite{};
     sf::Texture _texture{};
     sf::Vector2f _position{};

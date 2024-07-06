@@ -30,7 +30,11 @@ private:
     const std::string _tittle{};
     inline static const sf::Color _backgroundColor = sf::Color::Blue;
 
-    Player _player; // TODO: temp variable
+    Player _player;
     StaticMash _staticMash;
     ClickObserver _clickObserver;
+    sf::Clock _clock;
+    float _deltaTime = 0.f;
+    sf::Vector2f _targetPosition{};
+    bool _isMoving = false;
 };
