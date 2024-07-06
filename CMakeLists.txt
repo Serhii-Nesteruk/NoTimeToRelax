@@ -4,6 +4,7 @@ project(SFML_Project)
 set(CMAKE_CXX_STANDARD 20)
 
 add_subdirectory(Game/Core)
+add_subdirectory(Game/Patterns)
 
 set(SOURCES 
     main.cpp
@@ -18,4 +19,5 @@ target_link_libraries(NotTimeToRelax PRIVATE
     sfml-window 
     sfml-system
     Core
+    Patterns
 )

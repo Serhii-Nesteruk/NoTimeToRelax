@@ -19,6 +19,8 @@ void Game::start()
 void Game::setup()
 {
     setupPlayers();
+
+    _staticMash.addObserver(&_clickObserver);
 }
 
 void Game::eventProcessing()
@@ -28,6 +30,10 @@ void Game::eventProcessing()
     {
         if (event.type == sf::Event::Closed)
             _window.close();
+        // TODO: You should check if StaticMash was clicked by special control class
+        if (event.type == sf::Event::MouseButtonPressed)
+            if (_staticMash.isClicked()) 
+                _staticMash.notifyObservers();
     }
 }
 
