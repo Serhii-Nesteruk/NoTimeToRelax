@@ -44,11 +44,6 @@ std::size_t Player::getMoneyLvl() const
     return _moneyLvl;
 }
 
-float Player::getSpeed() const
-{
-    return _speed;
-}
-
 void Player::setHealthLvl(std::size_t healthLvl)
 {
     _healthLvl = healthLvl;

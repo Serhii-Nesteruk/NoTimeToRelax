@@ -5,6 +5,7 @@ set(CMAKE_CXX_STANDARD 20)
 
 add_subdirectory(Game/Core)
 add_subdirectory(Game/Patterns)
+add_subdirectory(Game/Controllers)
 
 set(SOURCES 
     main.cpp
@@ -20,4 +21,11 @@ target_link_libraries(NotTimeToRelax PRIVATE
     sfml-system
     Core
     Patterns
+    Controllers
+)
+
+target_include_directories(NotTimeToRelax PRIVATE 
+    "${CMAKE_SOURCE_DIR}/Game/Core/includes"
+    "${CMAKE_SOURCE_DIR}/Game/Patterns/includes"
+    "${CMAKE_SOURCE_DIR}/Game/Controllers/includes"
 )

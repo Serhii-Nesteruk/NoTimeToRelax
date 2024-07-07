@@ -21,7 +21,6 @@ public:
     [[nodiscard]] std::size_t getEducationLvl() const;
     [[nodiscard]] std::size_t getHappinessLvl() const;
     [[nodiscard]] std::size_t getMoneyLvl() const;
-    [[nodiscard]] float getSpeed () const;
 
     void setHealthLvl(std::size_t healthLvl);
     void setEducationLvl(std::size_t educationLvl);

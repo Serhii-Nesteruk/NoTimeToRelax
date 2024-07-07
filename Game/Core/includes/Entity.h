@@ -14,7 +14,7 @@ public:
         _speed = speed;
     }
 
-    [[nodicard]] float getSpeed () const
+    [[nodiscard]] float getSpeed () const
     {
         return _speed;
     }
