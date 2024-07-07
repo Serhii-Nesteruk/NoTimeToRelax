@@ -25,7 +25,8 @@ private:
     void setupPlayers();
     void setupControllers();
     void setupStaticObjects();
-
+    void setupMap();
+    void setupBackground(); // TODO: move to another class
 private:
     sf::RenderWindow _window;
     sf::Vector2f _windowSize{};

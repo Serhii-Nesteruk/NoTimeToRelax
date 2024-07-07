@@ -1,5 +1,6 @@
 #include "../includes/Game.h"
 #include <cmath>
+#include "Game.h"
 
 Game::Game(const sf::Vector2f windowSize, const std::string& tittle)
     : _windowSize(windowSize), _tittle(tittle)
@@ -22,17 +23,41 @@ void Game::start()
 
 void Game::setup()
 {
-    setupStaticObjects();
+    setupMap();
     setupControllers();
     setupPlayers();
+}
+
+void Game::setupMap()
+{
+    setupBackground();
+    setupStaticObjects();
+}
+
+void Game::setupBackground() // TODO: move to another class 
+{
+    if (!_backgroundTexture.loadFromFile("../Game/resources/textures/Background.jpg"))
+        throw std::runtime_error("Failed to load background texture");
+
+    _background.setTexture(_backgroundTexture);
 }
 
 void Game::eventProcessing()
 {
     sf::Event event;
     while(_window.pollEvent(event)) 
+    {
         if (event.type == sf::Event::Closed)
             _window.close();
+        if (event.type == sf::Event::Resized)
+        {
+            _window.setView(sf::View(sf::FloatRect(0, 0, event.size.width, event.size.height)));
+            sf::Vector2u textureSize = _backgroundTexture.getSize();
+            float scaleX = static_cast<float>(_window.getSize().x) / textureSize.x;
+            float scaleY = static_cast<float>(_window.getSize().y) / textureSize.y;
+            _background.setScale(scaleX, scaleY);
+        }
+    }
 }
 
 void Game::display() 
@@ -44,6 +69,7 @@ void Game::display()
 
 void Game::update()
 {
+    _window.draw(_background);
     for (auto& obj: _staticObjects)
         obj.draw(_window);
     _player.draw(_window);
@@ -79,13 +105,15 @@ void Game::setupStaticObjects() // TODO: Create map class and move part of this 
     {
         StaticMash temp;
         temp.addObserver(&_clickObserver)
+            .setTexture("../Game/resources/textures/HomeTexture.png")
             .setScale({0.2f, 0.2f});   
         
         switch (i) { // TODO: I think it's bad idea
             case 1:
                 // left upper angle
                 temp.setPosition({indentationX, indentationY})
-                    .setTexture("../Game/resources/textures/FastFoodTexture.png");
+                    .setTexture("../Game/resources/textures/FastFoodTexture.png")
+                    .setScale({0.5f, 0.5f});   ;
                 break;
             case 2:
                 // right upper angle
@@ -101,5 +129,5 @@ void Game::setupStaticObjects() // TODO: Create map class and move part of this 
                 break;
         }   
         _staticObjects.push_back(temp);
-    }  
-}   
+    }
+}
