@@ -6,6 +6,8 @@ set(CMAKE_CXX_STANDARD 20)
 add_subdirectory(Game/Core)
 add_subdirectory(Game/Patterns)
 add_subdirectory(Game/Controllers)
+add_subdirectory(Game/Subwindows)
+add_subdirectory(Game/Map)
 
 set(SOURCES 
     main.cpp
@@ -22,6 +24,8 @@ target_link_libraries(NotTimeToRelax PRIVATE
     Core
     Patterns
     Controllers
+    Subwindows
+    Map
 )
 
 target_include_directories(NotTimeToRelax PRIVATE 

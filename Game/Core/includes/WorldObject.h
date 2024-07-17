@@ -11,7 +11,7 @@ public:
     WorldObject(const WorldObject& other);
     ~WorldObject() = default;
 
-    void draw(sf::RenderWindow& window);
+    virtual void draw(sf::RenderWindow& window);
 
     [[nodiscard]] sf::Sprite getSprite() const;
     [[nodiscard]] sf::Texture getTexture() const;
