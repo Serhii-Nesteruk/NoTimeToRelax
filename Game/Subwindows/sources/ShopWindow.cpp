@@ -1,11 +1,5 @@
 #include "ShopWindow.h"
 
-ShopWindow::~ShopWindow()
-{
-    delete _window;
-    _window = nullptr;
-}
-
 void ShopWindow::draw(sf::RenderWindow &window)
 {
     WorldObject::draw(window);
@@ -15,14 +9,15 @@ void ShopWindow::draw(sf::RenderWindow &window)
 
 void ShopWindow::onNotify()
 {
+    std::cout << "shop window should be opened" << std::endl;
     if (_window == nullptr)
         throw std::runtime_error("ShopWindow ERROR: Window isn't attached");
     draw(*_window);
 }
 
-void ShopWindow::atachWindow(sf::RenderWindow *window)
+void ShopWindow::atachWindow(std::unique_ptr<sf::RenderWindow>& window)
 {
-    _window = window;
+    _window = std::move(window);
 }
 
 std::vector<Product> ShopWindow::getProducts() const

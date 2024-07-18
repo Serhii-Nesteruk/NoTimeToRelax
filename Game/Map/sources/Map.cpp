@@ -1,6 +1,8 @@
 #include "Map.h"
 
-void Map::draw(sf::RenderWindow& window)
+#include "ChaoticLemniscate.h"
+
+void Map::draw(sf::RenderWindow &window)
 {
     for (auto& obj: _staticObjects)
         obj.draw(window);
@@ -15,70 +17,98 @@ void Map::setupSubwindows()
     setupBackground();
     setupStaticObjects();
     setupShopWindows();
-}
+}   
 
 
 void Map::setupShopWindows() // TODO: improve me !!!
 {
-    ShopWindow fastFoodShop;
-    fastFoodShop.setPosition({200.f, 200.f});
+    ShopWindow fastFoodShop = createFastFoodShop({200.f, 200.f});
+    
+    _shops.push_back(fastFoodShop);
+
+    if (!_staticObjects.empty() && !_shops.empty())
+        _staticObjects.at(0).addObserver(&_shops.at(0));
+}
+
+void Map::setupRoads()
+{
+    ChaoticLemniscate::generateCurve();
+    ChaoticLemniscate::setWindowSize(_windowSize);
+}
+
+ShopWindow Map::createFastFoodShop(const sf::Vector2f& position)
+{
+    ShopWindow fastFoodShop; // TODO: TOOD: you should to attach window 
+    fastFoodShop.setPosition(position);
     fastFoodShop.setTexture("../Game/resources/textures/frame.jpg");
     fastFoodShop.setScale({0.9f, 0.9f});
+
+    std::vector<Product> products = createFastFoodProducts(position);
+
+    return attachProductsToShop(fastFoodShop, products);
+}
+
+std::vector<Product> Map::createFastFoodProducts(const sf::Vector2f& position)
+{
+    std::vector<Product> products;
 
     Product burger;
     burger.setTexture("../Game/resources/textures/BurgerProductTexture.jpg");
     burger.setScale({0.5f, 0.5f});
-    burger.setPosition({fastFoodShop.getPosition().x + 50.f, fastFoodShop.getPosition().y + 50.f});
+    burger.setPosition(position);
 
-    fastFoodShop.addProduct(burger);
+    products.push_back(burger);
 
-    _shops.push_back(fastFoodShop);
+    return products;
+}
 
-    _staticObjects.at(0).addObserver(&_shops.at(0));
+ShopWindow Map::attachProductsToShop(const ShopWindow &shop, const std::vector<Product> &products)
+{
+    ShopWindow temp = shop;
+
+    for (auto& product: products)
+        temp.addProduct(product);
+
+    return temp;
 }
 
 void Map::setupStaticObjects() // TODO: improve me !!!
 {
     int countOfStaticObjects = 4;
-    float indentationX = 50.f,
-        indentationY = 50.f;
-  
-    for (int i = 1; i <= countOfStaticObjects; ++i) 
+    
+    std::vector<sf::Vector2f> positions = ChaoticLemniscate::getCurve();
+
+    // TODO: remove it, it is for debuging 
+    for (auto& pos: positions)
+    {
+        std::cout << "x: " << pos.x << " y: " << pos.y << std::endl;
+    }
+
+    for (int i = 0; i < positions.size(); ++i)
     {
         StaticMash temp;
-        temp.addObserver(&_clickObserver)
-            .setTexture("../Game/resources/textures/HomeTexture.png")
-            .setScale({0.2f, 0.2f});   
+        temp.setTexture("../Game/resources/textures/HomeTexture.png")
+            .setScale({0.2f, 0.2f})
+            .setPosition(positions.at(i));
 
-        switch (i) { // TODO: I think it's bad idea
-            case 1:
-                // left upper angle
-                temp.setPosition({indentationX, indentationY})
-                    .setTexture("../Game/resources/textures/FastFoodTexture.png")
-                    .setScale({0.5f, 0.5f});   
-                break;
-            case 2:
-                // right upper angle
-                temp.setPosition({1050.f + indentationX, indentationY});
-                break;
-            case 3:
-                // left bottom angle
-                temp.setPosition({indentationX, 500.f  + indentationY});
-                break;
-            case 4:
-                // right bottom
-                temp.setPosition({1050.f  + indentationX, 500.f  + indentationY});
-                break;
-        }   
         _staticObjects.push_back(temp);
-    }
+    }   
 }
 
-void Map::setup()
+void Map::setup(const sf::Vector2f& windowSize)
 {
+    setWindowSize(windowSize);
+
+    setupRoads();
     setupBackground();
     setupSubwindows();
-    setupStaticObjects();
+}
+
+void Map::mouseInputHandle()
+{
+    if (Keyboard::checkIfRightMousePressed()) // TODO: it must be left mouse button     
+        for (auto& obj: _staticObjects)
+            obj.notifyObservers();
 }
 
 std::vector<StaticMash> Map::getStaticObjects() const
@@ -89,4 +119,9 @@ std::vector<StaticMash> Map::getStaticObjects() const
 std::vector<ShopWindow> Map::getShops() const
 {
     return _shops;
+}
+
+void Map::setWindowSize(const sf::Vector2f &windowSize)
+{
+    _windowSize = windowSize;
 }

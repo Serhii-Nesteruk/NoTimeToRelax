@@ -4,23 +4,24 @@
 #include "Product.h"
 #include "WorldObject.h"
 
+#include <memory>
 #include <vector>
 
 class ShopWindow : public WorldObject, public ClickObserver
 {
 public:
-    ShopWindow() = default;
-    ~ShopWindow();
+    ShopWindow() : _window(nullptr) {};
+    ~ShopWindow() = default;
 
     void draw(sf::RenderWindow& window) override;
     void onNotify() override;
 
-    void atachWindow(sf::RenderWindow* window);
+    void atachWindow(std::unique_ptr<sf::RenderWindow>& window);
 
     [[nodiscard]] std::vector<Product> getProducts() const;
 
     void addProduct(const Product& product);
 private:
     std::vector<Product> _products{};
-    sf::RenderWindow* _window = nullptr;
+    std::shared_ptr<sf::RenderWindow> _window;
 };

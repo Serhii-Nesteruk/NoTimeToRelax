@@ -1,6 +1,5 @@
-#include "../includes/Game.h"
-#include <cmath>
 #include "Game.h"
+#include <cmath>
 
 Game::Game(const sf::Vector2f windowSize, const std::string& tittle)
     : _windowSize(windowSize), _tittle(tittle)
@@ -14,16 +13,13 @@ void Game::start()
     while(_window.isOpen()) 
     {
         eventProcessing();
-        _deltaTime = _clock.restart().asSeconds();
-        playerController.mouseInputHandle();
-        playerController.movementControl(_deltaTime);
         display();
     }
 }
 
 void Game::setup()
 {
-    _map.setup();
+    _map.setup(_windowSize);
     setupControllers();
     setupPlayers();
 }
@@ -42,13 +38,16 @@ void Game::display()
 {
     _window.clear(_backgroundColor);
     update();
+    drawObjects();
     _window.display();
 }
 
 void Game::update()
 {
-    _map.draw(_window);
-    _player.draw(_window);
+    _deltaTime = _clock.restart().asSeconds();
+    _playerController.mouseInputHandle();
+    _map.mouseInputHandle();
+    _playerController.movementControl(_deltaTime);
 }
 
 void Game::createWindow()
@@ -66,7 +65,13 @@ void Game::setupPlayers()
 
 void Game::setupControllers()
 {
-    playerController.attachWindow(&_window);
-    playerController.attachPlayer(&_player);
-    playerController.setTargetData(_map.getStaticObjects());
+    _playerController.attachWindow(&_window);
+    _playerController.attachPlayer(&_player);
+    _playerController.setTargetData(_map.getStaticObjects());
+}
+
+void Game::drawObjects()
+{
+    _map.draw(_window);
+    _player.draw(_window);
 }

@@ -41,7 +41,7 @@ bool PlayerController::checkingGoalAchievement(Player *player, const TargetData&
 {
     sf::FloatRect playerBounds = player->getSprite().getGlobalBounds();
     sf::FloatRect targetBounds = target.getGlobalBounds();
-#include "PlayerController.h"
+
     return playerBounds.intersects(targetBounds);
 }
 

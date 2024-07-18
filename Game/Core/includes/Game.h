@@ -22,7 +22,8 @@ private:
     void update();
     void createWindow();
     void setupPlayers();
-    void setupControllers();
+    void setupControllers();    
+    void drawObjects();
 
 private:
     sf::RenderWindow _window;
@@ -30,12 +31,11 @@ private:
     const std::string _tittle{};
     inline static const sf::Color _backgroundColor = sf::Color::Blue;
 
-    PlayerController playerController;
+    PlayerController _playerController;
     Player _player;
 
     Map _map;
 
     sf::Clock _clock;
     float _deltaTime = 0.f;
-
 };
