@@ -33,15 +33,16 @@ void Map::setupShopWindows() // TODO: improve me !!!
 void Map::setupRoads()
 {
     ChaoticLemniscate::generateCurve();
-    ChaoticLemniscate::setWindowSize(_windowSize);
+    ChaoticLemniscate::setWindowSize(static_cast<sf::Vector2f>(_windowSize));
 }
 
 ShopWindow Map::createFastFoodShop(const sf::Vector2f& position)
 {
-    ShopWindow fastFoodShop; // TODO: TOOD: you should to attach window 
+    ShopWindow fastFoodShop;     
     fastFoodShop.setPosition(position);
     fastFoodShop.setTexture("../Game/resources/textures/frame.jpg");
     fastFoodShop.setScale({0.9f, 0.9f});
+    fastFoodShop.atachWindow(_window);
 
     std::vector<Product> products = createFastFoodProducts(position);
 
@@ -95,9 +96,10 @@ void Map::setupStaticObjects() // TODO: improve me !!!
     }   
 }
 
-void Map::setup(const sf::Vector2f& windowSize)
+void Map::setup(std::shared_ptr<sf::RenderWindow>& window)
 {
-    setWindowSize(windowSize);
+    attachWindow(window);
+    setWindowSize(_window.get()->getSize());
 
     setupRoads();
     setupBackground();
@@ -121,7 +123,12 @@ std::vector<ShopWindow> Map::getShops() const
     return _shops;
 }
 
-void Map::setWindowSize(const sf::Vector2f &windowSize)
+void Map::setWindowSize(const sf::Vector2u &windowSize)
 {
     _windowSize = windowSize;
+}
+
+void Map::attachWindow(std::shared_ptr<sf::RenderWindow> &window)
+{
+    _window = window;
 }

@@ -15,7 +15,7 @@ void ShopWindow::onNotify()
     draw(*_window);
 }
 
-void ShopWindow::atachWindow(std::unique_ptr<sf::RenderWindow>& window)
+void ShopWindow::atachWindow(std::shared_ptr<sf::RenderWindow>& window)
 {
     _window = std::move(window);
 }

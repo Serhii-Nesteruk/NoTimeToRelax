@@ -16,7 +16,7 @@ public:
     void draw(sf::RenderWindow& window) override;
     void onNotify() override;
 
-    void atachWindow(std::unique_ptr<sf::RenderWindow>& window);
+    void atachWindow(std::shared_ptr<sf::RenderWindow>& window);
 
     [[nodiscard]] std::vector<Product> getProducts() const;
 

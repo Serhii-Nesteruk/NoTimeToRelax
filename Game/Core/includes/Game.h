@@ -26,13 +26,13 @@ private:
     void drawObjects();
 
 private:
-    sf::RenderWindow _window;
+    std::shared_ptr<sf::RenderWindow> _window;
     sf::Vector2f _windowSize{};
     const std::string _tittle{};
     inline static const sf::Color _backgroundColor = sf::Color::Blue;
 
     PlayerController _playerController;
-    Player _player;
+    std::shared_ptr<Player> _player;
 
     Map _map;
 

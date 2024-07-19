@@ -3,17 +3,12 @@
 #include <cmath>
 #include <iostream>
 
-PlayerController::~PlayerController()
-{
-    detachWindow();
-}
-
-void PlayerController::attachPlayer(Player *player)
+void PlayerController::attachPlayer(std::shared_ptr<Player>& player)
 {
     _players.push_back(player);
 }
 
-void PlayerController::attachWindow(sf::RenderWindow *window)
+void PlayerController::attachWindow(std::shared_ptr<sf::RenderWindow>& window)
 {
     if (isWindowAttached())
         throw std::runtime_error("Failed window attaching");
@@ -21,23 +16,15 @@ void PlayerController::attachWindow(sf::RenderWindow *window)
     _window = window;
 }
 
-void PlayerController::detachWindow() {
-    if (isWindowAttached()) 
-    {
-        delete _window;
-        _window = nullptr; 
-    }
-}
-
 void PlayerController::movementControl(float deltaTime)
 {
     ensureWindowIsAttached();
-    for (auto* player: _players)
+    for (auto player: _players)
         if (isMoving())
             movePlayer(player, deltaTime);
 }
 
-bool PlayerController::checkingGoalAchievement(Player *player, const TargetData& target)
+bool PlayerController::checkingGoalAchievement(std::shared_ptr<Player>& player, const TargetData& target)
 {
     sf::FloatRect playerBounds = player->getSprite().getGlobalBounds();
     sf::FloatRect targetBounds = target.getGlobalBounds();
@@ -67,7 +54,7 @@ void PlayerController::targetPressingHandle(const TargetData& target)
     }
 }
 
-void PlayerController::movePlayer(Player *player, float deltaTime)
+void PlayerController::movePlayer(std::shared_ptr<Player>& player, float deltaTime)
 {
     TargetData target = findTargetById(_lastPressedTargetId);
     sf::Vector2f direction = calculateDirection(player, target);
@@ -83,7 +70,7 @@ void PlayerController::movePlayer(Player *player, float deltaTime)
         player->move(movement);
 }
 
-sf::Vector2f PlayerController::calculateDirection(Player *player, const TargetData &target)
+sf::Vector2f PlayerController::calculateDirection(std::shared_ptr<Player>& player, const TargetData &target)
 {
     sf::Vector2f direction = target.getPosition() - player->getPosition();
     float length = calculateLength(direction);
@@ -92,7 +79,7 @@ sf::Vector2f PlayerController::calculateDirection(Player *player, const TargetDa
     return direction;
 }
 
-sf::Vector2f PlayerController::calculateMovement(const sf::Vector2f &direction, Player *player, float deltaTime)
+sf::Vector2f PlayerController::calculateMovement(const sf::Vector2f &direction, std::shared_ptr<Player>& player, float deltaTime)
 {
     return direction * player->getSpeed() * deltaTime;
 }

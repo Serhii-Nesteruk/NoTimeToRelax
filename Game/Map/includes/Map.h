@@ -5,12 +5,13 @@
 #include "Keyboard.h"
 #include "../../Subwindows/includes/ShopWindow.h" // TODO: don't use relative paths 
 
+#include <memory>
 #include <vector>
 
 class Map 
 {
 public:
-    Map() = default;
+    Map() : _window(nullptr) {}
     ~Map() {}
 
     void draw(sf::RenderWindow& window);
@@ -18,14 +19,15 @@ public:
     void setupBackground();
     void setupSubwindows();
     void setupStaticObjects();
-    void setup(const sf::Vector2f& windowSize);
+    void setup(std::shared_ptr<sf::RenderWindow>& window);
 
     void mouseInputHandle();
 
     [[nodiscard]] std::vector<StaticMash> getStaticObjects() const;
     [[nodiscard]] std::vector<ShopWindow> getShops() const;
 
-    void setWindowSize(const sf::Vector2f& windowSize);
+    void setWindowSize(const sf::Vector2u& windowSize);
+    void attachWindow(std::shared_ptr<sf::RenderWindow>& window);
 
 private:
     void setupShopWindows();
@@ -37,7 +39,9 @@ private:
 private:
     std::vector<StaticMash> _staticObjects{};
     std::vector<ShopWindow> _shops{};
-    sf::Vector2f _windowSize{};
+    sf::Vector2u _windowSize{};
     sf::Sprite _background;
     sf::Texture _backgroundTexture;
+
+    std::shared_ptr<sf::RenderWindow> _window;
 };

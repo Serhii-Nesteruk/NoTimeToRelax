@@ -5,6 +5,7 @@
 #include "Keyboard.h"
 
 #include <vector>
+#include <memory>
 
 class TargetData {
     public:
@@ -29,11 +30,10 @@ class TargetData {
 class PlayerController {
 public:
     PlayerController() = default;
-    ~PlayerController();
+    ~PlayerController() = default;
 
-    void attachPlayer(Player* player);
-    void attachWindow(sf::RenderWindow* window);
-    void detachWindow();
+    void attachPlayer(std::shared_ptr<Player>& player);
+    void attachWindow(std::shared_ptr<sf::RenderWindow>& window);
     void movementControl(float deltaTime);
     void mouseInputHandle();
     void setTargetData(const std::vector<StaticMash>& targets); 
@@ -42,22 +42,22 @@ public:
 private:
     void ensureWindowIsAttached();
     void targetPressingHandle(const TargetData& target);
-    void movePlayer(Player* player, float deltaTime);
+    void movePlayer(std::shared_ptr<Player>& player, float deltaTime);
 
     [[nodiscard]] bool targetPressingCheck(const TargetData& target, const sf::Vector2f& mouse) const;
     [[nodiscard]] TargetData findTargetById(int id) const;
-    [[nodiscrad]] bool checkingGoalAchievement(Player* player, const TargetData& target);
+    [[nodiscrad]] bool checkingGoalAchievement(std::shared_ptr<Player>& player, const TargetData& target);
     [[nodiscard]] sf::Vector2f calculateMovement(const TargetData& target, Player* player, float deltaTime);
     [[nodiscard]] bool isMoving() const;
-    [[nodiscard]] sf::Vector2f calculateDirection(Player* player, const TargetData& target);
-    [[nodiscard]] sf::Vector2f calculateMovement(const sf::Vector2f& direction, Player* player, float deltaTime);
+    [[nodiscard]] sf::Vector2f calculateDirection(std::shared_ptr<Player>& player, const TargetData& target);
+    [[nodiscard]] sf::Vector2f calculateMovement(const sf::Vector2f& direction, std::shared_ptr<Player>& player, float deltaTime);
     [[nodiscard]] float calculateLength(const sf::Vector2f& direction);
     [[nodiscard]] bool isPosibleToChangeTarget() const;
 
 private:
-    std::vector<Player*> _players{};
+    std::vector<std::shared_ptr<Player>> _players{};
     std::vector<TargetData> _targets{};
-    sf::RenderWindow* _window = nullptr;
+    std::shared_ptr<sf::RenderWindow> _window;
 
     int _lastPressedTargetId = StaticMash::invalidId; 
     bool _isMoving = false, _isPosibleToChangeTarget = true;
