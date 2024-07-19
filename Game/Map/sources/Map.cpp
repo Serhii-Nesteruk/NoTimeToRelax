@@ -32,8 +32,9 @@ void Map::setupShopWindows() // TODO: improve me !!!
 
 void Map::setupRoads()
 {
-    ChaoticLemniscate::generateCurve();
     ChaoticLemniscate::setWindowSize(static_cast<sf::Vector2f>(_windowSize));
+    LemniscateMargines::setMargineses(200.f, 200.f);
+    ChaoticLemniscate::generateCurve();
 }
 
 ShopWindow Map::createFastFoodShop(const sf::Vector2f& position)
@@ -99,7 +100,7 @@ void Map::setupStaticObjects() // TODO: improve me !!!
 void Map::setup(std::shared_ptr<sf::RenderWindow>& window)
 {
     attachWindow(window);
-    setWindowSize(_window.get()->getSize());
+    setWindowSize(_window->getSize());
 
     setupRoads();
     setupBackground();

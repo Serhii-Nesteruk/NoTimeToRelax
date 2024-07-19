@@ -4,6 +4,18 @@
 #include <cmath>
 #include <vector>
 
+struct LemniscateMargines
+{
+public:
+    static void setMargineses(float vertical, float horizontal);
+
+    [[nodiscard]] static float getVeticalMargineses();
+    [[nodiscard]] static float getHorizontalMarginese();
+private:
+    inline static float _horizontalMarginesses = 0.f;
+    inline static float _verticalMarginesses = 0.f;
+};
+
 class ChaoticLemniscate 
 {
 public:

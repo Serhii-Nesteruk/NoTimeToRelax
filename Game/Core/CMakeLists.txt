@@ -13,4 +13,5 @@ target_include_directories(Core PUBLIC
     "${CMAKE_SOURCE_DIR}/Game/Patterns/includes"
     "${CMAKE_SOURCE_DIR}/Game/Controllers/includes"
     "${CMAKE_SOURCE_DIR}/Game/Map/includes"
+    "${CMAKE_SOURCE_DIR}/Game/Math/includes"
 )
