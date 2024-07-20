@@ -50,7 +50,7 @@ void PlayerController::targetPressingHandle(const TargetData& target)
     {
        _isPosibleToChangeTarget = false; 
        _lastPressedTargetId = target.getId();
-        _isMoving = true;
+       _isMoving = true;
     }
 }
 

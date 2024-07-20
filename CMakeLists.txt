@@ -3,10 +3,10 @@ project(SFML_Project)
 
 set(CMAKE_CXX_STANDARD 20)
 
+add_subdirectory(Game/Subwindows)
 add_subdirectory(Game/Core)
 add_subdirectory(Game/Patterns)
 add_subdirectory(Game/Controllers)
-add_subdirectory(Game/Subwindows)
 add_subdirectory(Game/Map)
 add_subdirectory(Game/Math)
 

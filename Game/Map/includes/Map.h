@@ -1,9 +1,10 @@
 #pragma once
 
+#include "../../Subwindows/includes/ShopWindow.h" 
 #include "StaticMash.h"
 #include "clickObserver.h"
 #include "Keyboard.h"
-#include "../../Subwindows/includes/ShopWindow.h" // TODO: don't use relative paths 
+#include "StaticObjectsController.h"
 
 #include <memory>
 #include <vector>
@@ -28,13 +29,16 @@ public:
 
     void setWindowSize(const sf::Vector2u& windowSize);
     void attachWindow(std::shared_ptr<sf::RenderWindow>& window);
+    void generateRoads();
+
+    void handleWindowResize(std::shared_ptr<sf::RenderWindow>& window);
 
 private:
+    void resetStaticObjPosition();
     void setupShopWindows();
-    void setupRoads();
     [[nodiscard]] ShopWindow createFastFoodShop(const sf::Vector2f& position);
     [[nodiscard]] std::vector<Product> createFastFoodProducts(const sf::Vector2f& position);
-    [[nodiscard]] ShopWindow attachProductsToShop(const ShopWindow& shop, const std::vector<Product>& products);
+    [[nodiscard]] ShopWindow attachProductsToShop(ShopWindow shop, const std::vector<Product>& products);
 
 private:
     std::vector<StaticMash> _staticObjects{};

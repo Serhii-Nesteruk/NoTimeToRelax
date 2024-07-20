@@ -9,7 +9,7 @@ file(GLOB MAP_HEADERS
 add_library(Map ${MAP_SOURCES} ${MAP_HEADERS})
 
 target_include_directories(Map PUBLIC 
-    "includes"
+    "${CMAKE_CURRENT_SOURCE_DIR}/includes"
     "${CMAKE_SOURCE_DIR}/Game/Patterns/includes"
     "${CMAKE_SOURCE_DIR}/Game/Controllers/includes"
     "${CMAKE_SOURCE_DIR}/Game/Core/includes"
@@ -18,7 +18,6 @@ target_include_directories(Map PUBLIC
 )
 
 target_link_libraries(Map PRIVATE 
-    Core
     Subwindows
     Math
 )

@@ -33,6 +33,8 @@ void Game::eventProcessing()
     {
         if (event.type == sf::Event::Closed)
             _window->close();
+        if (event.type == sf::Event::Resized)
+            _map.handleWindowResize();
     }
 }
 

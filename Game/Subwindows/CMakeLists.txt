@@ -9,7 +9,7 @@ file(GLOB SUBWINDOWS_HEADERS
 add_library(Subwindows ${SUBWINDOWS_SOURCES} ${SUBWINDOWS_HEADERS})
 
 target_include_directories(Subwindows PUBLIC 
-    "includes"
+    "${CMAKE_CURRENT_SOURCE_DIR}/includes"
     "${CMAKE_SOURCE_DIR}/Game/Patterns/includes"
     "${CMAKE_SOURCE_DIR}/Game/Controllers/includes"
     "${CMAKE_SOURCE_DIR}/Game/Core/includes"
