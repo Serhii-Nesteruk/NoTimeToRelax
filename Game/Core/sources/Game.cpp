@@ -33,8 +33,6 @@ void Game::eventProcessing()
     {
         if (event.type == sf::Event::Closed)
             _window->close();
-        if (event.type == sf::Event::Resized)
-            _map.handleWindowResize();
     }
 }
 
@@ -56,14 +54,14 @@ void Game::update()
 
 void Game::createWindow()
 {
-    _window->create(sf::VideoMode(_windowSize.x, _windowSize.y), _tittle);
+    _window->create(sf::VideoMode(_windowSize.x, _windowSize.y), _tittle, _windowStyle);
 }
 
 void Game::setupPlayers()
 {
-    _player->setupSprite("../Game/resources/textures/PlayerTexture.png");
+    _player->setupSprite("../Game/resources/textures/PlayerTexture.png"); // TODO:
     _player->setPosition({600.f, 360.f});
-    _player->setScale({0.3f, 0.3f});
+    _player->setScale({0.4f, 0.4f});
     _player->setSpeed(1000.f);
 }
 

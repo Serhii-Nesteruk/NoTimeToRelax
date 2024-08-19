@@ -9,15 +9,14 @@ void ShopWindow::draw(sf::RenderWindow &window)
 
 void ShopWindow::onNotify()
 {
-    std::cout << "shop window should be opened" << std::endl;
     if (_window == nullptr)
         throw std::runtime_error("ShopWindow ERROR: Window isn't attached");
     draw(*_window);
-}
+}   
 
-void ShopWindow::atachWindow(std::shared_ptr<sf::RenderWindow>& window)
+void ShopWindow::attachWindow(std::shared_ptr<sf::RenderWindow>& window)
 {
-    _window = std::move(window);
+    _window = window;
 }
 
 std::vector<Product> ShopWindow::getProducts() const

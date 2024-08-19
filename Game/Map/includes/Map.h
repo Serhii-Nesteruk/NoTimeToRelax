@@ -40,6 +40,7 @@ private:
     [[nodiscard]] std::vector<Product> createFastFoodProducts(const sf::Vector2f& position);
     [[nodiscard]] ShopWindow attachProductsToShop(ShopWindow shop, const std::vector<Product>& products);
 
+    void loadBackground(const std::filesystem::path& path);
 private:
     std::vector<StaticMash> _staticObjects{};
     std::vector<ShopWindow> _shops{};

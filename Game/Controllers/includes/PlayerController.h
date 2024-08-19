@@ -25,7 +25,7 @@ class TargetData {
         int _id = StaticMash::invalidId;
         sf::FloatRect _globalBounds{};
         
-    };
+};
 
 class PlayerController {
 public:

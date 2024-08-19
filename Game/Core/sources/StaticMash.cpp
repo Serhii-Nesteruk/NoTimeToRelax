@@ -1,7 +1,7 @@
-#include "../includes/StaticMash.h"
+#include "StaticMash.h"
 
 #include <algorithm>
-#include "StaticMash.h"
+#include <iostream>
 
 StaticMash::StaticMash() : _id(++_nextId)
 {
@@ -26,11 +26,17 @@ void StaticMash::removeObserver(IObserver* observer)
 
 void StaticMash::notifyObservers() const 
 {
-    for (auto observer : _observers) 
+    std::cout << _observers.size() << std::endl;
+    for (auto& observer : _observers) 
         observer->onNotify();
 }
 
 int StaticMash::getId() const
 {
     return _id;
+}
+
+bool StaticMash::checkIfObjWasPressed(const sf::Vector2f &mousePos)
+{
+    return _sprite.getGlobalBounds().contains(mousePos);
 }

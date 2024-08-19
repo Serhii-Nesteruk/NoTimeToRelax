@@ -6,7 +6,7 @@ int main()
 {
     try
     {
-        Game game(sf::Vector2f(1280.f, 720.f), "No Time To Relax");
+        Game game(sf::Vector2f(1920.f, 1080.f), "No Time To Relax");
         game.start();
     }
     catch(const std::runtime_error& e)

@@ -6,17 +6,20 @@
 
 void Map::draw(sf::RenderWindow &window)
 {
+    window.draw(_background);
     for (auto& obj: _staticObjects)
         obj.draw(window);
 }
 
 void Map::setupBackground() // TODO: implement me !!!
 {
+    loadBackground("../Game/resources/textures/background.png");
+    _background.setTexture(_backgroundTexture);
+    _background.setPosition(0.f, 0.f);
 }
 
 void Map::setupSubwindows()
 {
-    setupBackground();
     setupShopWindows();
 }
 
@@ -31,7 +34,7 @@ void Map::resetStaticObjPosition()
 void Map::setupShopWindows() // TODO: improve me !!!
 {
     ShopWindow fastFoodShop = createFastFoodShop({200.f, 200.f});
-    
+
     _shops.push_back(fastFoodShop);
 
     if (!_staticObjects.empty() && !_shops.empty())
@@ -59,7 +62,7 @@ ShopWindow Map::createFastFoodShop(const sf::Vector2f& position)
     fastFoodShop.setPosition(position);
     fastFoodShop.setTexture("../Game/resources/textures/frame.jpg");
     fastFoodShop.setScale({0.9f, 0.9f});
-    fastFoodShop.atachWindow(_window);
+    fastFoodShop.attachWindow(_window);
 
     std::vector<Product> products = createFastFoodProducts(position);
 
@@ -89,6 +92,12 @@ ShopWindow Map::attachProductsToShop(ShopWindow shop, const std::vector<Product>
     return shop;
 }
 
+void Map::loadBackground(const std::filesystem::path& path)
+{
+    if (!_backgroundTexture.loadFromFile(path.string()))
+        throw std::runtime_error("Failed to load background");
+}
+
 void Map::setupStaticObjects() // TODO: improve me !!!
 {
     int countOfStaticObjects = 4;
@@ -103,7 +112,9 @@ void Map::setupStaticObjects() // TODO: improve me !!!
             .setPosition(curvePoints.at(i));
 
         _staticObjects.push_back(obj);
-    }   
+    }  
+
+    _staticObjects.at(0).addObserver(&_shops.at(0)); // TODO: remove it 
 }
 
 void Map::setup(std::shared_ptr<sf::RenderWindow>& window)
@@ -111,18 +122,23 @@ void Map::setup(std::shared_ptr<sf::RenderWindow>& window)
     attachWindow(window);
     setWindowSize(_window->getSize());
 
-    generateRoads();
     setupBackground();
+    generateRoads();
     setupSubwindows();
     setupStaticObjects();
 }
 
 void Map::mouseInputHandle() // TODO: IMPLEMENT ME!!!
 {
-    if (Keyboard::checkIfLeftMousePressed()) // TODO: it must be left mouse button     
-        std::for_each(_staticObjects.begin(), _staticObjects.end(), [](StaticMash& obj){
-            obj.notifyObservers();
+    if (Keyboard::checkIfLeftMousePressed()) 
+    {
+        sf::Vector2i mouse = Keyboard::getMousePosition(*_window);
+        std::for_each(_staticObjects.begin(), _staticObjects.end(), [&mouse](StaticMash& obj)
+        {
+            if (obj.checkIfObjWasPressed(static_cast<sf::Vector2f>(mouse))) 
+                obj.notifyObservers();
         });
+    }
 }
 
 std::vector<StaticMash> Map::getStaticObjects() const

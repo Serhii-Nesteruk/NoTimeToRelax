@@ -135,7 +135,7 @@ void PlayerController::ensureWindowIsAttached()
 
 bool PlayerController::targetPressingCheck(const TargetData &target, const sf::Vector2f &mouse) const
 {
-    return target.getGlobalBounds().contains(static_cast<sf::Vector2f>(mouse));
+    return target.getGlobalBounds().contains(mouse);
 }
 
 TargetData PlayerController::findTargetById(int id) const

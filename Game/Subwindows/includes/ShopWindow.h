@@ -10,13 +10,13 @@
 class ShopWindow : public WorldObject, public ClickObserver
 {
 public:
-    ShopWindow() : _window(nullptr) {};
+    ShopWindow() : _window(std::make_shared<sf::RenderWindow>()) {};
     ~ShopWindow() = default;
 
     void draw(sf::RenderWindow& window) override;
     void onNotify() override;
 
-    void atachWindow(std::shared_ptr<sf::RenderWindow>& window);
+    void attachWindow(std::shared_ptr<sf::RenderWindow>& window);
 
     [[nodiscard]] std::vector<Product> getProducts() const;
 

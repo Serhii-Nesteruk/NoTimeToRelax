@@ -18,6 +18,8 @@ public:
     inline static const int invalidId = -1;
 
     [[nodiscard]] int getId() const;
+
+    [[nodiscard]] bool checkIfObjWasPressed(const sf::Vector2f& mousePos);
 private:
     std::vector<IObserver*> _observers;
     int _id = invalidId;

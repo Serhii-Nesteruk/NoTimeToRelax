@@ -38,4 +38,6 @@ private:
 
     sf::Clock _clock;
     float _deltaTime = 0.f;
+    
+    inline static const int _windowStyle = sf::Style::Fullscreen;
 };
